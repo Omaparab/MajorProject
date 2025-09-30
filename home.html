@@ -107,6 +107,8 @@
       background:#f3f4f6;
       border:1px solid #e5e7eb; 
       display:none;
+      white-space:pre-wrap;
+      font-family:monospace;
     }
     code { background:#eef2ff; padding:2px 6px; border-radius:6px; }
     .tips { margin-top:10px; color:var(--muted); font-size:13px; }
@@ -134,7 +136,7 @@
       <div class="field">
         <span class="icon-left" aria-hidden="true">🔎</span>
         <input id="q" name="q" type="search" placeholder="e.g., retrieve best scholarships for CS undergrads" autocomplete="on" aria-label="Query" required />
-        <button type="button" class="clear" id="clearBtn" aria-label="Clear input">✕</button>
+        <button type="button" class="clear" id="clearBtn" aria-label="Clear input"></button>
       </div>
       <button type="submit" class="action-btn" aria-label="Submit query">🚀</button>
     </form>
@@ -169,17 +171,21 @@
     e.preventDefault();
     const val = input.value.trim();
     if (val) {
-      // Send query to Python backend
-      const response = await fetch("http://localhost:8000/process", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: val })
-      });
-      const data = await response.json();
+      try {
+        const response = await fetch("http://localhost:8000/process", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: val })
+        });
+        const data = await response.json();
 
-      // Show backend response
-      result.style.display = 'block';
-      result.textContent = "Processed: " + data.output;
+        // Show processed output
+        result.style.display = 'block';
+        result.innerHTML = "Processed Output:\n" + JSON.stringify(data, null, 2);
+      } catch (err) {
+        result.style.display = 'block';
+        result.innerHTML = "Error: " + err.message;
+      }
     }
   });
 })();
