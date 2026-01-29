@@ -34,7 +34,7 @@ def process():
         ("tokens", tokens),
         ("tokens_no_stopwords", tokens_no_stop),
         ("lemmatized_tokens", lemmatized_tokens),
-        ("noun_groups", noun_chunks)
+        ("named_entities", noun_chunks)
     ])
 
     # Convert to JSON string with indentation

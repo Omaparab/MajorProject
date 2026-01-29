@@ -1,0 +1,17 @@
+1. Create a virtual environment:
+python -m venv venv
+
+
+2. Activate the virtual environment
+.\venv\Scripts\Activate
+
+
+3. Add requirements file(optional)
+pip freeze > requirements.txt
+
+
+4. Install Vercel CLI using npm
+npm -i g vercel
+
+
+5. Create vercel.json file
